@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "777332670415",
+    "project_id": "what-s-up-332e4",
+    "storage_bucket": "what-s-up-332e4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:777332670415:android:8af36ae0bd309e365f1cba",
+        "android_client_info": {
+          "package_name": "com.example.whats_up"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "777332670415-359kdttoic8uhanf5fc1boh3552l9ah5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.whats_up",
+            "certificate_hash": "8bbf238b295a26a956ebf8dbbb588c9a82e1f4ee"
+          }
+        },
+        {
+          "client_id": "777332670415-7t527t825csjo1rg35p3nojkrpqfgcdr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFAP_Dvt_jDQmCIKai6_EfR3IKwJWQRcQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "777332670415-7t527t825csjo1rg35p3nojkrpqfgcdr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "777332670415-cgqqiq4h2jgtslop87hsc85v1d071oak.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.whatsUp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
