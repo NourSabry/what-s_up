@@ -1,7 +1,10 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:whats_up/common/widgets/error.dart';
 import 'package:whats_up/features/auth/screens/login_screen.dart';
 import 'package:whats_up/features/auth/screens/otp_screen.dart';
+import 'package:whats_up/features/auth/screens/user_info_screen.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -13,6 +16,10 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       final verficationId = settings.arguments as String;
       return MaterialPageRoute(
         builder: (context) => OtpScreen(verficationId: verficationId),
+      );
+    case UserInfoInformationScreen.routeName:
+      return MaterialPageRoute(
+        builder: (context) => UserInfoInformationScreen(),
       );
     default:
       return MaterialPageRoute(

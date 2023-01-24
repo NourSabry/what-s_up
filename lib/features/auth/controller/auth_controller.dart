@@ -15,4 +15,12 @@ class AuthController {
   void signInWithPhone(BuildContext context, String phoneNumber) {
     authrepo.signInWithPhone(context, phoneNumber);
   }
+
+  void verifyOtp(BuildContext context, String verifcationId, String userOtp) {
+    authrepo.verifyOtp(
+      context: context,
+      verficationId: verifcationId,
+      userOtp: userOtp,
+    );
+  }
 }

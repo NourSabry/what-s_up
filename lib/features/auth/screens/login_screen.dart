@@ -1,31 +1,30 @@
-// ignore_for_file: no_leading_underscores_for_local_identifiers
+// ignore_for_file: no_leading_underscores_for_local_identifiers, avoid_print
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whats_up/colors.dart';
+import 'package:whats_up/common/utils/utils.dart';
 import 'package:whats_up/common/widgets/custom_button.dart';
 import 'package:country_picker/country_picker.dart';
+import 'package:whats_up/features/auth/controller/auth_controller.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends ConsumerStatefulWidget {
   static const routeName = '/login-screen';
   const LoginScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  ConsumerState<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  @override
-  Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+class _LoginScreenState extends ConsumerState<LoginScreen> {
     final phoneController = TextEditingController();
-    Country? country;
+  Country? country;
 
-    @override
-    void dispose() {
-      super.dispose();
-      phoneController.dispose();
-    }
-
+  @override
+  void dispose() {
+    super.dispose();
+    phoneController.dispose();
+  }
 
   void pickCountry() {
     showCountryPicker(
@@ -36,6 +35,25 @@ class _LoginScreenState extends State<LoginScreen> {
           });
         });
   }
+
+  void sendPhoneNumber() {
+    String phoneNumber = phoneController.text.trim();
+    if (country != null && phoneNumber.isNotEmpty) {
+      ref
+          .read(authControllerProvider)
+          .signInWithPhone(context, '+${country!.phoneCode}$phoneNumber');
+    } else {
+      showSnackBar(context: context, content: 'Fill out all the fields');
+    }
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
+ 
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -63,17 +81,24 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(height: 5),
                 Row(
                   children: [
-                   if (country != null) Text('+${country!.phoneCode}'),
-                  const SizedBox(width: 10),
-                  SizedBox(
-                    width: size.width * 0.7,
-                    child: TextField(
-                      controller: phoneController,
-                      decoration: const InputDecoration(
-                        hintText: 'phone number',
+                    if (country != null)
+                      Text(
+                        '+${country!.phoneCode}',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    const SizedBox(width: 10),
+                    SizedBox(
+                      width: size.width * 0.7,
+                      child: TextField(
+                        controller: phoneController,
+                        decoration: const InputDecoration(
+                          hintText: 'phone number',
+                        ),
                       ),
                     ),
-                  ),
                   ],
                 ),
               ],
@@ -84,7 +109,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   padding: EdgeInsets.symmetric(horizontal: size.width * 0.3),
                   child: CustomButton(
                     text: "next",
-                    function: () {},
+                    function: sendPhoneNumber,
                   ),
                 ),
               ],
