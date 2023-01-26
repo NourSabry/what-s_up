@@ -2,9 +2,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whats_up/colors.dart';
+import 'package:whats_up/common/widgets/error.dart';
+import 'package:whats_up/common/widgets/loader.dart';
+import 'package:whats_up/features/auth/controller/auth_controller.dart';
 import 'package:whats_up/features/landing/screens/landing_screen.dart';
 import 'package:whats_up/firebase_options.dart';
 import 'package:whats_up/router.dart';
+import 'package:whats_up/screens/mobile_chat_screen.dart';
 
 void main() async {
   //makes sue that flutter engine had been intialized
@@ -19,11 +23,11 @@ void main() async {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
       title: 'Whats-up',
       debugShowCheckedModeBanner: false,
@@ -34,7 +38,20 @@ class MyApp extends StatelessWidget {
         ),
       ),
       onGenerateRoute: ((settings) => generateRoute(settings)),
-      home: LandingScreen(),
+      home: ref.watch(userDataAuthProvider).when(
+            data: (user) {
+              if (user == null) {
+                return LandingScreen();
+              }
+              return const MobileChatScreen();
+            },
+            error: (err, trace) {
+              return ErrorScreen(
+                error: err.toString(),
+              );
+            },
+            loading: () => const Loader(),
+          ),
     );
   }
 }
