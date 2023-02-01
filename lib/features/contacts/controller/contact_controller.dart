@@ -1,25 +1,31 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_contacts/contact.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:whats_up/features/contacts/select_contact_repo.dart';
+import 'package:whats_up/features/contacts/repository/select_contact_repo.dart';
 
+ 
 final getContactsProvider = FutureProvider((ref) {
-  final selectCountryRepo = ref.watch(selectContactRepoProvider);
-  return selectCountryRepo.getContacts();
+  final selectContactRepository = ref.watch(selectContactsRepositoryProvider);
+  return selectContactRepository.getContacts();
 });
 
 final selectContactControllerProvider = Provider((ref) {
-  final selectContactRepo = ref.watch(selectContactRepoProvider);
+  final selectContactRepository = ref.watch(selectContactsRepositoryProvider);
   return SelectContactController(
     ref: ref,
-    selectContactRepo: selectContactRepo,
+    selectContactRepository: selectContactRepository,
   );
 });
 
 class SelectContactController {
   final ProviderRef ref;
-  final SelectContactRepo selectContactRepo;
-
+  final SelectContactRepository selectContactRepository;
   SelectContactController({
     required this.ref,
-    required this.selectContactRepo,
+    required this.selectContactRepository,
   });
+
+  void selectContact(Contact selectedContact, BuildContext context) {
+    selectContactRepository.selectContact(selectedContact, context);
+  }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:whats_up/colors.dart';
 import 'package:whats_up/info.dart';
-import 'package:whats_up/screens/mobile_chat_screen.dart';
+import 'package:whats_up/features/chat/screens/mobile_chat_screen.dart';
 
 class ContactList extends StatelessWidget {
   const ContactList({super.key});
@@ -22,7 +22,10 @@ class ContactList extends StatelessWidget {
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => const MobileChatScreen(),
+                        builder: (context) =>  const   MobileChatScreen(
+                          name : 'RR',
+                          uid : '12347',
+                        ),
                       ),
                     );
                   },

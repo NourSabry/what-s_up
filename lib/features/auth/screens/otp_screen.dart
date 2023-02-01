@@ -10,7 +10,7 @@ class OtpScreen extends ConsumerWidget {
   const OtpScreen({super.key, required this.verficationId});
 
   void verifyOtp(WidgetRef ref, BuildContext context, String userOtp) {
-    ref.read(authControllerProvider).verifyOtp(
+    ref.read(authControllerProvider).verifyOTP(
           context,
           verficationId,
           userOtp,

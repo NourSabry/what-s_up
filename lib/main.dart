@@ -8,10 +8,9 @@ import 'package:whats_up/features/auth/controller/auth_controller.dart';
 import 'package:whats_up/features/landing/screens/landing_screen.dart';
 import 'package:whats_up/firebase_options.dart';
 import 'package:whats_up/router.dart';
-import 'package:whats_up/screens/mobile_chat_screen.dart';
+import 'package:whats_up/screens/mobile_screen_layout.dart';
 
 void main() async {
-  //makes sue that flutter engine had been intialized
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -24,26 +23,27 @@ void main() async {
 }
 
 class MyApp extends ConsumerWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
-      title: 'Whats-up',
       debugShowCheckedModeBanner: false,
+      title: 'Whatsapp UI',
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: backgroundColor,
+        
         appBarTheme: const AppBarTheme(
           color: appBarColor,
         ),
       ),
-      onGenerateRoute: ((settings) => generateRoute(settings)),
+      onGenerateRoute: (settings) => generateRoute(settings),
       home: ref.watch(userDataAuthProvider).when(
             data: (user) {
               if (user == null) {
                 return LandingScreen();
               }
-              return const MobileChatScreen();
+              return const MobileScreenLayout();
             },
             error: (err, trace) {
               return ErrorScreen(
@@ -55,10 +55,3 @@ class MyApp extends ConsumerWidget {
     );
   }
 }
-
-
-
-// web       1:777332670415:web:4147ff882fa78a105f1cba
-// android   1:777332670415:android:8af36ae0bd309e365f1cba
-// ios       1:777332670415:ios:ffe871bb5e48fa455f1cba
-// macos     1:777332670415:ios:ffe871bb5e48fa455f1cba

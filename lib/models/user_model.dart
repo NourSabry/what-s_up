@@ -1,30 +1,25 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-
-//you can't name it User without overriding it when you using firebase beacuse there s already
-//a defined one in firebase with the name User
 class UserModel {
   final String name;
-  final String uidl;
+  final String uid;
   final String profilePic;
-  final bool isOnlie;
+  final bool isOnline;
   final String phoneNumber;
   final List<String> groupId;
-
   UserModel({
-    required this.groupId,
-    required this.isOnlie,
     required this.name,
-    required this.phoneNumber,
+    required this.uid,
     required this.profilePic,
-    required this.uidl,
+    required this.isOnline,
+    required this.phoneNumber,
+    required this.groupId,
   });
 
   Map<String, dynamic> toMap() {
-    return <String, dynamic>{
+    return {
       'name': name,
-      'uidl': uidl,
+      'uid': uid,
       'profilePic': profilePic,
-      'isOnlie': isOnlie,
+      'isOnline': isOnline,
       'phoneNumber': phoneNumber,
       'groupId': groupId,
     };
@@ -32,14 +27,12 @@ class UserModel {
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
-      name: map['name'] as String,
-      uidl: map['uidl'] as String,
-      profilePic: map['profilePic'] as String,
-      isOnlie: map['isOnlie'] as bool,
-      phoneNumber: map['phoneNumber'] as String,
-      groupId: List<String>.from(
-        (map['groupId'] as List<String>),
-      ),
+      name: map['name'] ?? '',
+      uid: map['uid'] ?? '',
+      profilePic: map['profilePic'] ?? '',
+      isOnline: map['isOnline'] ?? false,
+      phoneNumber: map['phoneNumber'] ?? '',
+      groupId: List<String>.from(map['groupId']),
     );
   }
 }

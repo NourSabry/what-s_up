@@ -64,57 +64,59 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         elevation: 0,
         backgroundColor: backgroundColor,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(18.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              children: [
-                const Text("Whats up will need to verify your phone number"),
-                const SizedBox(height: 10),
-                TextButton(
-                  onPressed: pickCountry,
-                  child: const Text("Pick Country"),
-                ),
-                const SizedBox(height: 5),
-                Row(
-                  children: [
-                    if (country != null)
-                      Text(
-                        '+${country!.phoneCode}',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    const SizedBox(width: 10),
-                    SizedBox(
-                      width: size.width * 0.7,
-                      child: TextField(
-                        controller: phoneController,
-                        decoration: const InputDecoration(
-                          hintText: 'phone number',
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: size.width * 0.3),
-                  child: CustomButton(
-                    text: "next",
-                    function: sendPhoneNumber,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(18.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                children: [
+                  const Text("Whats up will need to verify your phone number"),
+                  const SizedBox(height: 10),
+                  TextButton(
+                    onPressed: pickCountry,
+                    child: const Text("Pick Country"),
                   ),
-                ),
-              ],
-            ),
-          ],
+                  const SizedBox(height: 5),
+                  Row(
+                    children: [
+                      if (country != null)
+                        Text(
+                          '+${country!.phoneCode}',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      const SizedBox(width: 10),
+                      SizedBox(
+                        width: size.width * 0.7,
+                        child: TextField(
+                          controller: phoneController,
+                          decoration: const InputDecoration(
+                            hintText: 'phone number',
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: size.width * 0.3),
+                    child: CustomButton(
+                      text: "next",
+                      function: sendPhoneNumber,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

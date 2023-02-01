@@ -6,6 +6,7 @@ import 'package:whats_up/features/auth/screens/login_screen.dart';
 import 'package:whats_up/features/auth/screens/otp_screen.dart';
 import 'package:whats_up/features/auth/screens/user_info_screen.dart';
 import 'package:whats_up/features/contacts/screens/select_contact_screen.dart';
+import 'package:whats_up/features/chat/screens/mobile_chat_screen.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -25,6 +26,17 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case SelectContactsScreen.routeName:
       return MaterialPageRoute(
         builder: (context) => SelectContactsScreen(),
+      );
+
+    case MobileChatScreen.routeName:
+      final arguemnts = settings.arguments as Map<String, dynamic>;
+      final name = arguemnts['name'];
+      final uid = arguemnts['uid'];
+      return MaterialPageRoute(
+        builder: (context) => MobileChatScreen(
+          name: name,
+          uid: uid,
+        ),
       );
     default:
       return MaterialPageRoute(
