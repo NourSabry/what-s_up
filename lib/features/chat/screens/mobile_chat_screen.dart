@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
- import 'package:whats_up/common/widgets/loader.dart';
+import 'package:whats_up/common/widgets/loader.dart';
 import 'package:whats_up/features/auth/controller/auth_controller.dart';
 import 'package:whats_up/features/chat/widgets/bottom_chat_field.dart';
 import 'package:whats_up/models/user_model.dart';
@@ -24,14 +24,10 @@ class MobileChatScreen extends ConsumerWidget {
             }
             return Column(
               children: [
-
                 Text(name),
-                 Text(
-                  snapshot.data!.isOnline ?
-                   'online' 
-                   : 'offline'
-                   ,
-                  style: const  TextStyle(
+                Text(
+                  snapshot.data!.isOnline ? 'online' : 'offline',
+                  style: const TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.normal,
                   ),
@@ -51,7 +47,9 @@ class MobileChatScreen extends ConsumerWidget {
           Expanded(
             child: ChartList(),
           ),
-          BottomChatField()
+          BottomChatField(
+            recieverUserId: uid,
+          ),
         ],
       ),
     );

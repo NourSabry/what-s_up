@@ -1,74 +1,84 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whats_up/colors.dart';
-import 'package:whats_up/info.dart';
-import 'package:whats_up/features/chat/screens/mobile_chat_screen.dart';
+import 'package:whats_up/common/widgets/loader.dart';
+import 'package:whats_up/features/chat/controller/chat_controller.dart';
+ import 'package:whats_up/features/chat/screens/mobile_chat_screen.dart';
+import 'package:whats_up/models/chat_contact.dart';
+import 'package:intl/intl.dart';
 
-class ContactList extends StatelessWidget {
+class ContactList extends ConsumerWidget {
   const ContactList({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
       padding: const EdgeInsets.only(top: 10),
-      child: ListView.builder(
-        shrinkWrap: true,
-        itemCount: info.length,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: Column(
-              children: [
-                InkWell(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) =>  const   MobileChatScreen(
-                          name : 'RR',
-                          uid : '12347',
-                        ),
-                      ),
-                    );
-                  },
-                  child: ListTile(
-                    title: Text(
-                      info[index]['name'].toString(),
-                      style: const TextStyle(
-                        fontSize: 18,
-                      ),
-                    ),
-                    subtitle: Padding(
-                      padding: const EdgeInsets.only(top: 6),
-                      child: Text(
-                        info[index]['message'].toString(),
-                        style: const TextStyle(
-                          fontSize: 15,
-                        ),
-                      ),
-                    ),
-                    leading: CircleAvatar(
-                      backgroundImage: NetworkImage(
-                        info[index]['profilePic'].toString(),
-                      ),
-                      radius: 30,
-                    ),
-                    trailing: Text(
-                      info[index]['time'].toString(),
-                      style: const TextStyle(
-                        fontSize: 13,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ),
-                ),
-                const Divider(
-                  color: dividerColor,
-                  indent: 85,
-                ),
-              ],
-            ),
-          );
-        },
-      ),
+      child:     StreamBuilder<List<ChatContact>>(
+                stream: ref.watch(chatControllerProvider).chatContacts(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Loader();
+                  }
+
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (context, index) {
+                      var chatContactData = snapshot.data![index];
+
+                      return Column(
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                MobileChatScreen.routeName,
+                                arguments: {
+                                  'name': chatContactData.name,
+                                  'uid': chatContactData.contactId,
+                                },
+                              );
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.only(bottom: 8.0),
+                              child: ListTile(
+                                title: Text(
+                                  chatContactData.name,
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                  ),
+                                ),
+                                subtitle: Padding(
+                                  padding: const EdgeInsets.only(top: 6.0),
+                                  child: Text(
+                                    chatContactData.lastMessage,
+                                    style: const TextStyle(fontSize: 15),
+                                  ),
+                                ),
+                                leading: CircleAvatar(
+                                  backgroundImage: NetworkImage(
+                                    chatContactData.profilePic,
+                                  ),
+                                  radius: 30,
+                                ),
+                                trailing: Text(
+                                  DateFormat.Hm()
+                                      .format(chatContactData.timeSent),
+                                  style: const TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 13,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const Divider(color: dividerColor, indent: 85),
+                        ],
+                      );
+                    },
+                  );
+                },),
     );
   }
 }
