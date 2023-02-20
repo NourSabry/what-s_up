@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whats_up/colors.dart';
+import 'package:whats_up/common/enums/message_enum.dart';
+import 'package:whats_up/common/utils/utils.dart';
 import 'package:whats_up/features/chat/controller/chat_controller.dart';
 
 class BottomChatField extends ConsumerStatefulWidget {
@@ -23,7 +27,7 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
       ref.read(chatControllerProvider).sendTextMessage(
             context,
             _messageController.text.trim(),
-            widget.recieverUserId, 
+            widget.recieverUserId,
           );
       setState(() {
         _messageController.text = "";
@@ -35,6 +39,28 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
   void dispose() {
     _messageController.dispose();
     super.dispose();
+  }
+
+  void sendFileMessage(
+    File file,
+    MessageEnum messageEnum,
+  ) {
+    ref.read(chatControllerProvider).sendFileMessage(
+          context,
+          file,
+          widget.recieverUserId,
+          messageEnum,
+        );
+  }
+
+  void selectImage() async {
+    File? image = await pickImageFromgallery(context);
+    if (image != null) {
+      sendFileMessage(
+        image,
+        MessageEnum.image,
+      );
+    }
   }
 
   @override
@@ -82,9 +108,19 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
                 width: 100,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
-                  children: const [
-                    Icon(Icons.camera_alt, color: Colors.grey),
-                    Icon(Icons.attach_file, color: Colors.grey),
+                  children: [
+                    IconButton(
+                        icon: const Icon(
+                          Icons.camera_alt,
+                          color: Colors.grey,
+                        ),
+                        onPressed: selectImage),
+                    IconButton(
+                        icon: const Icon(
+                          Icons.attach_file,
+                          color: Colors.grey,
+                        ),
+                        onPressed: selectImage),
                   ],
                 ),
               ),

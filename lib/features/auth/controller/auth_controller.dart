@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whats_up/features/auth/repository/auth_repository.dart';
-import 'package:whats_up/models/user_model.dart';
+ import 'package:whats_up/models/user_model.dart';
  
 final authControllerProvider = Provider((ref) {
   final authRepository = ref.watch(authRepositoryProvider);
@@ -56,4 +56,7 @@ class AuthController {
   void setUserState(bool isOnline) {
     authRepository.setUserState(isOnline);
   }
+
+ 
+
 }

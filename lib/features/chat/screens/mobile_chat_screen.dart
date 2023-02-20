@@ -4,7 +4,7 @@ import 'package:whats_up/common/widgets/loader.dart';
 import 'package:whats_up/features/auth/controller/auth_controller.dart';
 import 'package:whats_up/features/chat/widgets/bottom_chat_field.dart';
 import 'package:whats_up/models/user_model.dart';
-import 'package:whats_up/widgets/chat_list.dart';
+import 'package:whats_up/features/chat/widgets/chat_list.dart';
 
 class MobileChatScreen extends ConsumerWidget {
   static const routeName = '/mobile-chat';
@@ -45,7 +45,9 @@ class MobileChatScreen extends ConsumerWidget {
       body: Column(
         children: [
           Expanded(
-            child: ChartList(),
+            child: ChatList(
+              receiverUserId: uid,
+            ),
           ),
           BottomChatField(
             recieverUserId: uid,

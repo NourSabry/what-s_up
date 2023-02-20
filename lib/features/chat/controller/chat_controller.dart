@@ -1,9 +1,13 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:whats_up/common/enums/message_enum.dart';
 import 'package:whats_up/features/auth/controller/auth_controller.dart';
 import 'package:whats_up/features/chat/repoistories/chat_repository.dart';
 import 'package:whats_up/models/chat_contact.dart';
+import 'package:whats_up/models/message.dart';
 
 final chatControllerProvider = Provider((ref) {
   final chatRepo = ref.watch(chatRepositoryProvider);
@@ -25,6 +29,10 @@ class ChatController {
     return chatrepo.getChatContacts();
   }
 
+
+  Stream<List<Message>> chatStream(String recieverUserId) {
+    return chatrepo.getChatStream(recieverUserId);
+  }
   void sendTextMessage(
     BuildContext context,
     String text,
@@ -36,6 +44,24 @@ class ChatController {
             text: text,
             recieverUserId: recieverUserId,
             senderUser: value!,
+          ),
+        );
+  }
+
+    void sendFileMessage(
+    BuildContext context,
+    File file,
+     String recieverUserId,
+     MessageEnum messageEnum,
+  ) {
+    ref.read(userDataAuthProvider).whenData(
+          (value) => chatrepo.sendFileMessage(
+            context: context,
+            file: file,
+            receiverId: recieverUserId,
+            senderUser: value!,
+            messageEnum: messageEnum,
+            ref: ref,
           ),
         );
   }
