@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:whats_up/colors.dart';
 import 'package:whats_up/common/enums/message_enum.dart';
-import 'package:whats_up/features/chat/widgets/diplay_message.dart';
+import 'package:whats_up/features/chat/widgets/display_message.dart';
 
 class MyMessageCard extends StatelessWidget {
-  final String message;
+  final String message;                                                           
   final String date;
   final MessageEnum type;
   const MyMessageCard({

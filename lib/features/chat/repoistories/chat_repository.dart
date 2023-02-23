@@ -260,16 +260,16 @@ class ChatRepository {
       String? contactMsg;
       switch (messageEnum) {
         case MessageEnum.image:
-          contactMsg = 'photo';
+          contactMsg = '📷 Photo';
           break;
         case MessageEnum.video:
-          contactMsg = 'video';
+          contactMsg = '📸 Video';
           break;
         case MessageEnum.audio:
-          contactMsg = 'audio';
+          contactMsg = '🎵 Audio';
           break;
         case MessageEnum.gif:
-          contactMsg = 'gif';
+          contactMsg = 'GIF';
           break;
         default:
       }
@@ -290,6 +290,42 @@ class ChatRepository {
         messageType: messageEnum,
          recieverUserName: recieverUserData.name,
          senderUsername: senderUser.name,
+      );
+    } catch (e) {
+      showSnackBar(context: context, content: e.toString());
+    }
+  }
+
+
+    void sendgifMessage({
+    required BuildContext context,
+    required String gifUrl,
+    required String recieverUserId,
+    required UserModel senderUser,
+  }) async {
+    try {
+      var timeSent = DateTime.now();
+      UserModel? recieverUserData;
+
+      var messageId = const Uuid().v1();
+
+      _saveDataToContactsSubcollection(
+        senderUser,
+        recieverUserData,
+        'GIF',
+        timeSent,
+        recieverUserId,
+      );
+
+      _saveMessageToMessageSubcollection(
+        recieverUserId: recieverUserId,
+        text: gifUrl,
+        timeSent: timeSent,
+        messageType: MessageEnum.gif,
+        messageId: messageId,
+        username: senderUser.name,
+        recieverUserName: recieverUserData?.name,
+        senderUsername: senderUser.name,
       );
     } catch (e) {
       showSnackBar(context: context, content: e.toString());

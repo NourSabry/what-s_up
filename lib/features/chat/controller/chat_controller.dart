@@ -29,10 +29,10 @@ class ChatController {
     return chatrepo.getChatContacts();
   }
 
-
   Stream<List<Message>> chatStream(String recieverUserId) {
     return chatrepo.getChatStream(recieverUserId);
   }
+
   void sendTextMessage(
     BuildContext context,
     String text,
@@ -48,11 +48,11 @@ class ChatController {
         );
   }
 
-    void sendFileMessage(
+  void sendFileMessage(
     BuildContext context,
     File file,
-     String recieverUserId,
-     MessageEnum messageEnum,
+    String recieverUserId,
+    MessageEnum messageEnum,
   ) {
     ref.read(userDataAuthProvider).whenData(
           (value) => chatrepo.sendFileMessage(
@@ -62,6 +62,22 @@ class ChatController {
             senderUser: value!,
             messageEnum: messageEnum,
             ref: ref,
+          ),
+        );
+  }
+
+  void sendGIFMessage(
+    BuildContext context,
+    String gifUrl,
+    String recieverUserId,
+  ) {
+    
+    ref.read(userDataAuthProvider).whenData(
+          (value) => chatrepo.sendgifMessage(
+            context: context,
+            gifUrl: gifUrl,
+            recieverUserId: recieverUserId,
+            senderUser: value!,
           ),
         );
   }
