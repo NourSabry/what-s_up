@@ -59,3 +59,20 @@ Future<GiphyGif?> pickGif(BuildContext context) async {
   }
   return gif;
 }
+
+
+ 
+//   async: ^2.9.0
+  // collection: ^1.16.0
+  // connectivity_plus: ^2.3.9
+  // fixnum: ^1.0.1
+  // meta: ^1.8.0
+  // http: ^0.13.5
+  // logging: ^1.1.0
+  // uuid: ^3.0.6
+  // synchronized: ^3.0.0+3
+  // protobuf: ^2.1.0
+  // flutter_webrtc: 0.9.18
+  // dart_webrtc: 1.0.12
+  // device_info_plus: ^6.0.0
+  // webrtc_interface: 1.0.10

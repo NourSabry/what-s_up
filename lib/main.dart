@@ -25,16 +25,14 @@ void main() async {
 class MyApp extends ConsumerWidget {
   const MyApp({Key? key}) : super(key: key);
 
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Whatsapp UI',
+      title: 'WhatsapFlatButtonp UI',
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: backgroundColor,
-        
-        appBarTheme: const AppBarTheme(
+        appBarTheme: const AppBarTheme( 
           color: appBarColor,
         ),
       ),

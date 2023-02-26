@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 import 'package:whats_up/common/enums/message_enum.dart';
+import 'package:whats_up/common/providers/message_reply_provider.dart';
 import 'package:whats_up/common/repository/common_firebase_repo.dart';
 import 'package:whats_up/common/utils/utils.dart';
 import 'package:whats_up/models/chat_contact.dart';
@@ -165,8 +166,12 @@ class ChatRepository {
     required String username,
     required MessageEnum messageType,
     required String senderUsername,
-    required String? recieverUserName,
-  }) async {
+    required   recieverUserName,
+    required MessageReply? messageReply,
+    required String senderUserName,
+    required String recieverUsername,
+    required MessageEnum  repliedMessageType,
+   }) async {
     final message = Message(
       senderId: auth.currentUser!.uid,
       recieverId: recieverUserId,
@@ -175,6 +180,10 @@ class ChatRepository {
       timeSent: timeSent,
       messageId: messageId,
       isSeen: false,
+      repliedMessages: messageReply == null ? '' : messageReply.message,
+      repliedTo: messageReply == null ? '' : messageReply.isMe ? senderUserName : recieverUsername,
+      repliedMessageType: repliedMessageType,
+
     );
 
     // users -> sender id -> reciever id -> messages -> message id -> store message
@@ -206,6 +215,7 @@ class ChatRepository {
     required String text,
     required String recieverUserId,
     required UserModel senderUser,
+    required MessageReply messageReply,
   }) async {
     try {
       var timeSent = DateTime.now();
@@ -230,6 +240,11 @@ class ChatRepository {
         username: senderUser.name,
         recieverUserName: recieverUserData?.name,
         senderUsername: senderUser.name,
+        messageReply: messageReply,
+        recieverUsername: recieverUserData!.name,
+        senderUserName: senderUser.name,
+        repliedMessageType: messageReply == null ? MessageEnum.text : messageReply.messageEnum,
+
       );
     } catch (e) {
       showSnackBar(context: context, content: e.toString());

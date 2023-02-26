@@ -4,14 +4,22 @@ import 'package:whats_up/common/enums/message_enum.dart';
 import 'package:whats_up/features/chat/widgets/display_message.dart';
 
 class MyMessageCard extends StatelessWidget {
-  final String message;                                                           
+  final String message;
   final String date;
   final MessageEnum type;
+  final VoidCallback onLeftSwipe;
+  final String repliedText;
+  final String userName;
+  final MessageEnum repliedMessageType;
   const MyMessageCard({
     super.key,
     required this.date,
     required this.message,
     required this.type,
+    required this.onLeftSwipe,
+    required this.repliedMessageType,
+    required this.repliedText,
+    required this.userName,
   });
 
   @override
@@ -32,17 +40,19 @@ class MyMessageCard extends StatelessWidget {
           child: Stack(
             children: [
               Padding(
-                padding: type ==  MessageEnum.text? const EdgeInsets.only(
-                  left: 10,
-                  right: 30,
-                  top: 5,
-                  bottom: 20,
-                ) :  const EdgeInsets.only(
-                  left: 5,
-                  right: 5,
-                  top: 5,
-                  bottom: 25,
-                ), 
+                padding: type == MessageEnum.text
+                    ? const EdgeInsets.only(
+                        left: 10,
+                        right: 30,
+                        top: 5,
+                        bottom: 20,
+                      )
+                    : const EdgeInsets.only(
+                        left: 5,
+                        right: 5,
+                        top: 5,
+                        bottom: 25,
+                      ),
                 child: DisplayMessage(
                   message: message,
                   type: type,
