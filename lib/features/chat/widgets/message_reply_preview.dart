@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whats_up/common/providers/message_reply_provider.dart';
+import 'package:whats_up/features/chat/widgets/display_message.dart';
 
 class MessageReplyPreview extends ConsumerWidget {
   const MessageReplyPreview({super.key});
 
   void cancelReply(WidgetRef ref) {
     ref.read(messageReplyProvider.notifier).update((state) => null);
-    
   }
 
   @override
@@ -16,6 +16,10 @@ class MessageReplyPreview extends ConsumerWidget {
     return Container(
       width: 350,
       padding: const EdgeInsets.all(8),
+      decoration: const BoxDecoration(
+          color: Colors.transparent,
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(12), topRight: Radius.circular(12))),
       child: Column(
         children: [
           Row(
@@ -29,7 +33,7 @@ class MessageReplyPreview extends ConsumerWidget {
                 ),
               ),
               GestureDetector(
-                onTap: () {},
+                onTap: () => cancelReply(ref),
                 child: const Icon(
                   Icons.close,
                 ),
@@ -37,7 +41,10 @@ class MessageReplyPreview extends ConsumerWidget {
             ],
           ),
           const SizedBox(height: 8),
-          Text(messageReply.message),
+          DisplayMessage(
+            message: messageReply.message,
+            type: messageReply.messageEnum,
+          ),
         ],
       ),
     );

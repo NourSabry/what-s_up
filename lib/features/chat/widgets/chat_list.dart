@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:whats_up/common/enums/message_enum.dart';
+import 'package:whats_up/common/providers/message_reply_provider.dart';
 import 'package:whats_up/common/widgets/loader.dart';
 
 import 'package:whats_up/features/chat/controller/chat_controller.dart';
@@ -24,6 +26,26 @@ class ChatList extends ConsumerStatefulWidget {
 
 class _ChatListState extends ConsumerState<ChatList> {
   final ScrollController _messageController = ScrollController();
+
+  @override
+  void dispose() {
+    _messageController.dispose();
+    super.dispose();
+  }
+
+  void onMessageSwipe(
+    String message,
+    bool isMe,
+    MessageEnum messageEnum,
+  ) {
+    ref.read(messageReplyProvider.state).update(
+          (state) => MessageReply(
+            message: message,
+            isMe: isMe,
+            messageEnum: messageEnum,
+          ),
+        );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,14 +75,25 @@ class _ChatListState extends ConsumerState<ChatList> {
                   repliedText: messageData.repliedMessages,
                   userName: messageData.repliedTo,
                   repliedMessageType: messageData.repliedMessageType,
-                  onLeftSwipe: () {},
-
+                  onLeftSwipe: () => onMessageSwipe(
+                    messageData.text,
+                    true,
+                    messageData.type,
+                  ),
                 );
               }
               return SenderMessageCard(
                 message: messageData.text,
                 date: timeSent,
                 type: messageData.type,
+                repliedText: messageData.repliedMessages,
+                userName: messageData.repliedTo,
+                repliedMessageType: messageData.repliedMessageType,
+                onRightSwipe: () => onMessageSwipe(
+                  messageData.text,
+                  true,
+                  messageData.type,
+                ),
               );
             },
             itemCount: snapshot.data!.length,

@@ -13,7 +13,7 @@ import 'package:whats_up/common/enums/message_enum.dart';
 import 'package:whats_up/common/providers/message_reply_provider.dart';
 import 'package:whats_up/common/utils/utils.dart';
 import 'package:whats_up/features/chat/controller/chat_controller.dart';
-import 'package:whats_up/features/chat/widgets/message_reply_review.dart';
+import 'package:whats_up/features/chat/widgets/message_reply_preview.dart';
 
 class BottomChatField extends ConsumerStatefulWidget {
   final String recieverUserId;
