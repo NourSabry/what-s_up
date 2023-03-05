@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whats_up/colors.dart';
 import 'package:whats_up/features/auth/controller/auth_controller.dart';
 import 'package:whats_up/features/contacts/screens/select_contact_screen.dart';
 import 'package:whats_up/features/chat/widgets/contact_list.dart';
+import 'package:whats_up/features/status/screens/status_contacts_screen.dart';
 
 class MobileScreenLayout extends ConsumerStatefulWidget {
   const MobileScreenLayout({super.key});
@@ -13,21 +14,21 @@ class MobileScreenLayout extends ConsumerStatefulWidget {
 }
 
 class _MobileScreenLayoutState extends ConsumerState<MobileScreenLayout>
-    with WidgetsBindingObserver {
-
-      //any observer needs to be addded in initState
+    with WidgetsBindingObserver , TickerProviderStateMixin {
+      late TabController tabBarController;
+  //any observer needs to be addded in initState
   @override
   void initState() {
     //we're only adding this beacuse this is the MobileScreenLayoutState,
     //which is adding a mixin with WidgetsBindingObserver
     WidgetsBinding.instance.addObserver(this);
+    tabBarController = TabController(length: 3, vsync: this);
     super.initState();
   }
 
-
-@override
+  @override
   void dispose() {
-     WidgetsBinding.instance.removeObserver(this);
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
@@ -74,15 +75,16 @@ class _MobileScreenLayoutState extends ConsumerState<MobileScreenLayout>
                 icon: const Icon(Icons.more_vert),
                 color: Colors.grey),
           ],
-          bottom: const TabBar(
+          bottom:   TabBar(
+            controller: tabBarController,
               indicatorColor: tabColor,
               indicatorWeight: 4,
               labelColor: tabColor,
               unselectedLabelColor: Colors.grey,
-              labelStyle: TextStyle(
+              labelStyle: const TextStyle(
                 fontWeight: FontWeight.bold,
               ),
-              tabs: [
+              tabs:  const [
                 Tab(
                   text: "Chats",
                 ),
@@ -94,7 +96,14 @@ class _MobileScreenLayoutState extends ConsumerState<MobileScreenLayout>
                 ),
               ]),
         ),
-        body: const ContactList(),
+        body: TabBarView(
+          controller: tabBarController,
+          children: const [
+            ContactList(),
+            StatusContactsScreen(),
+              Text("Calls"),
+          ],
+        ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.pushNamed(context, SelectContactsScreen.routeName);

@@ -7,6 +7,7 @@ import 'package:whats_up/common/enums/message_enum.dart';
 import 'package:whats_up/features/chat/widgets/display_message.dart';
 
 class SenderMessageCard extends StatelessWidget {
+
   final String message;
   final String date;
   final MessageEnum type;
@@ -27,6 +28,7 @@ class SenderMessageCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+        final isReplying = repliedText.isNotEmpty;
     return SwipeTo(
       onRightSwipe:onRightSwipe ,
       child: Align(
@@ -58,9 +60,35 @@ class SenderMessageCard extends StatelessWidget {
                           top: 5,
                           bottom: 25,
                         ),
-                  child: DisplayMessage(
-                    message: message,
-                    type: type,
+                  child: Column(
+                    children: [
+                      if (isReplying) ...[
+                        Text(
+                          userName,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height : 3),
+                        Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration:   BoxDecoration(
+                            color: backgroundColor.withOpacity(0.5),
+                            borderRadius:  const BorderRadius.all(
+                              Radius.circular(5),
+                            ),
+                          ),
+                          child: DisplayMessage(
+                            message: repliedText,
+                            type: repliedMessageType,
+                          ),
+                        ),
+                                                const SizedBox(height : 3),
+
+                      ],
+                  
+                
+                    ],
                   ),
                 ),
                 Positioned(

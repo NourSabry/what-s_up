@@ -12,6 +12,7 @@ class MyMessageCard extends StatelessWidget {
   final String repliedText;
   final String userName;
   final MessageEnum repliedMessageType;
+  final bool isSeen;
   const MyMessageCard({
     super.key,
     required this.date,
@@ -21,6 +22,7 @@ class MyMessageCard extends StatelessWidget {
     required this.repliedMessageType,
     required this.repliedText,
     required this.userName,
+    required this.isSeen,
   });
 
   @override
@@ -66,12 +68,12 @@ class MyMessageCard extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        const SizedBox(height : 3),
+                        const SizedBox(height: 3),
                         Container(
                           padding: const EdgeInsets.all(10),
-                          decoration:   BoxDecoration(
+                          decoration: BoxDecoration(
                             color: backgroundColor.withOpacity(0.5),
-                            borderRadius:  const BorderRadius.all(
+                            borderRadius: const BorderRadius.all(
                               Radius.circular(5),
                             ),
                           ),
@@ -80,8 +82,7 @@ class MyMessageCard extends StatelessWidget {
                             type: repliedMessageType,
                           ),
                         ),
-                                                const SizedBox(height : 3),
-
+                        const SizedBox(height: 3),
                       ],
                       DisplayMessage(
                         message: message,
@@ -103,10 +104,10 @@ class MyMessageCard extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 5),
-                      const Icon(
-                        Icons.done_all,
+                      Icon(
+                        isSeen ? Icons.done_all : Icons.done,
                         size: 20,
-                        color: Colors.white60,
+                        color: isSeen ? Colors.blue : Colors.white60,
                       ),
                     ],
                   ),
