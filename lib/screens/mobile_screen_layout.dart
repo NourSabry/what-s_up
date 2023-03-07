@@ -1,9 +1,12 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
- import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whats_up/colors.dart';
+import 'package:whats_up/common/utils/utils.dart';
 import 'package:whats_up/features/auth/controller/auth_controller.dart';
 import 'package:whats_up/features/contacts/screens/select_contact_screen.dart';
 import 'package:whats_up/features/chat/widgets/contact_list.dart';
+import 'package:whats_up/features/status/screens/confirm_status_screen.dart';
 import 'package:whats_up/features/status/screens/status_contacts_screen.dart';
 
 class MobileScreenLayout extends ConsumerStatefulWidget {
@@ -14,8 +17,8 @@ class MobileScreenLayout extends ConsumerStatefulWidget {
 }
 
 class _MobileScreenLayoutState extends ConsumerState<MobileScreenLayout>
-    with WidgetsBindingObserver , TickerProviderStateMixin {
-      late TabController tabBarController;
+    with WidgetsBindingObserver, TickerProviderStateMixin {
+  late TabController tabBarController;
   //any observer needs to be addded in initState
   @override
   void initState() {
@@ -75,8 +78,8 @@ class _MobileScreenLayoutState extends ConsumerState<MobileScreenLayout>
                 icon: const Icon(Icons.more_vert),
                 color: Colors.grey),
           ],
-          bottom:   TabBar(
-            controller: tabBarController,
+          bottom: TabBar(
+              controller: tabBarController,
               indicatorColor: tabColor,
               indicatorWeight: 4,
               labelColor: tabColor,
@@ -84,7 +87,7 @@ class _MobileScreenLayoutState extends ConsumerState<MobileScreenLayout>
               labelStyle: const TextStyle(
                 fontWeight: FontWeight.bold,
               ),
-              tabs:  const [
+              tabs: const [
                 Tab(
                   text: "Chats",
                 ),
@@ -101,12 +104,24 @@ class _MobileScreenLayoutState extends ConsumerState<MobileScreenLayout>
           children: const [
             ContactList(),
             StatusContactsScreen(),
-              Text("Calls"),
+            Text("Calls"),
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.pushNamed(context, SelectContactsScreen.routeName);
+          onPressed: () async {
+            if (tabBarController.index == 0) {
+              Navigator.pushNamed(context, SelectContactsScreen.routeName);
+            } else {
+              File? pickedImage = await pickImageFromgallery(context);
+              if (pickedImage != null) {
+                // ignore: use_build_context_synchronously
+                Navigator.pushNamed(
+                  context,
+                  ConfirmStatusScreen.routeName,
+                  arguments: pickedImage
+                );
+              } else {}
+            }
           },
           backgroundColor: tabColor,
           child: const Icon(
