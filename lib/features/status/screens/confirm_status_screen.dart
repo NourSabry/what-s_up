@@ -1,16 +1,21 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'dart:io';
-
 import 'package:whats_up/colors.dart';
+import 'package:whats_up/features/status/controller/status_controller.dart';
 
 class ConfirmStatusScreen extends ConsumerWidget {
-  static const String routeName = 'confirm-status-screen';
+  static const String routeName = '/confirm-status-screen';
   final File file;
   const ConfirmStatusScreen({
     Key? key,
     required this.file,
   }) : super(key: key);
+
+  void addStatus(WidgetRef ref, BuildContext context) {
+    ref.read(statusControllerProvider).addStatus(file, context);
+    Navigator.pop(context);
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -22,7 +27,7 @@ class ConfirmStatusScreen extends ConsumerWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () => addStatus(ref, context),
         backgroundColor: tabColor,
         child: const Icon(
           Icons.done,

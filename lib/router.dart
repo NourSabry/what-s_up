@@ -10,6 +10,8 @@ import 'package:whats_up/features/auth/screens/user_info_screen.dart';
 import 'package:whats_up/features/contacts/screens/select_contact_screen.dart';
 import 'package:whats_up/features/chat/screens/mobile_chat_screen.dart';
 import 'package:whats_up/features/status/screens/confirm_status_screen.dart';
+import 'package:whats_up/features/status/screens/status_screen.dart';
+import 'package:whats_up/models/status.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -30,7 +32,6 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => SelectContactsScreen(),
       );
-
     case MobileChatScreen.routeName:
       final arguemnts = settings.arguments as Map<String, dynamic>;
       final name = arguemnts['name'];
@@ -41,13 +42,18 @@ Route<dynamic> generateRoute(RouteSettings settings) {
           uid: uid,
         ),
       );
-
-          case ConfirmStatusScreen.routeName:
+    case ConfirmStatusScreen.routeName:
       final file = settings.arguments as File;
-    
       return MaterialPageRoute(
         builder: (context) => ConfirmStatusScreen(
           file: file,
+        ),
+      );
+    case StatusScreen.routeName:
+      final status = settings.arguments as Status;
+      return MaterialPageRoute(
+        builder: (context) => StatusScreen(
+          status: status,
         ),
       );
     default:

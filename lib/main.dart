@@ -9,6 +9,7 @@ import 'package:whats_up/features/landing/screens/landing_screen.dart';
 import 'package:whats_up/firebase_options.dart';
 import 'package:whats_up/router.dart';
 import 'package:whats_up/screens/mobile_screen_layout.dart';
+ 
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
