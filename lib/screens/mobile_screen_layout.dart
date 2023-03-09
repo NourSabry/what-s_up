@@ -6,6 +6,7 @@ import 'package:whats_up/common/utils/utils.dart';
 import 'package:whats_up/features/auth/controller/auth_controller.dart';
 import 'package:whats_up/features/contacts/screens/select_contact_screen.dart';
 import 'package:whats_up/features/chat/widgets/contact_list.dart';
+import 'package:whats_up/features/group%20chat/screens/create_group_screen.dart';
 import 'package:whats_up/features/status/screens/confirm_status_screen.dart';
 import 'package:whats_up/features/status/screens/status_contacts_screen.dart';
 
@@ -73,10 +74,23 @@ class _MobileScreenLayoutState extends ConsumerState<MobileScreenLayout>
               icon: const Icon(Icons.search),
               color: Colors.grey,
             ),
-            IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.more_vert),
-                color: Colors.grey),
+            PopupMenuButton(
+              icon: const Icon(
+                (Icons.more_vert),
+                color: Colors.grey,
+              ),
+              itemBuilder: (context) => [
+                PopupMenuItem(
+                  child: const Text("create group"),
+                  onTap: () => Future(
+                    () => Navigator.pushNamed(
+                      context,
+                      CreateGroupScreen.routeName,
+                    ),
+                  ),
+                ),
+              ],
+            )
           ],
           bottom: TabBar(
               controller: tabBarController,
@@ -115,11 +129,8 @@ class _MobileScreenLayoutState extends ConsumerState<MobileScreenLayout>
               File? pickedImage = await pickImageFromgallery(context);
               if (pickedImage != null) {
                 // ignore: use_build_context_synchronously
-                Navigator.pushNamed(
-                  context,
-                  ConfirmStatusScreen.routeName,
-                  arguments: pickedImage
-                );
+                Navigator.pushNamed(context, ConfirmStatusScreen.routeName,
+                    arguments: pickedImage);
               } else {}
             }
           },

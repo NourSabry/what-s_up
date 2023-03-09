@@ -55,4 +55,3 @@ class MyApp extends ConsumerWidget {
     );
   }
 }
-            //             //since we're using two where conditions, indexs will be required in firebase

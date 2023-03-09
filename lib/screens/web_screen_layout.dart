@@ -38,9 +38,9 @@ class WebScreenLayout extends StatelessWidget {
             ),
             child: Column(
               children: [
-                WebChatAppBar(),
-                 const Expanded(
-                  child: ChatList( receiverUserId: '',),
+                WebChatAppBar(), 
+                const   Expanded(
+                  child: ChatList( recieverUserId: '',isGroupChat : false ),
                 ),
                 Container(
                   height: MediaQuery.of(context).size.height * 0.07,

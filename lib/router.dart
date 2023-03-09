@@ -9,6 +9,7 @@ import 'package:whats_up/features/auth/screens/otp_screen.dart';
 import 'package:whats_up/features/auth/screens/user_info_screen.dart';
 import 'package:whats_up/features/contacts/screens/select_contact_screen.dart';
 import 'package:whats_up/features/chat/screens/mobile_chat_screen.dart';
+import 'package:whats_up/features/group%20chat/screens/create_group_screen.dart';
 import 'package:whats_up/features/status/screens/confirm_status_screen.dart';
 import 'package:whats_up/features/status/screens/status_screen.dart';
 import 'package:whats_up/models/status.dart';
@@ -36,10 +37,13 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       final arguemnts = settings.arguments as Map<String, dynamic>;
       final name = arguemnts['name'];
       final uid = arguemnts['uid'];
+            final isGroupChat = arguemnts['isGroupChat'];
+
       return MaterialPageRoute(
         builder: (context) => MobileChatScreen(
           name: name,
           uid: uid,
+          isGroup :isGroupChat,
         ),
       );
     case ConfirmStatusScreen.routeName:
@@ -55,6 +59,10 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         builder: (context) => StatusScreen(
           status: status,
         ),
+      );
+    case CreateGroupScreen.routeName:
+      return MaterialPageRoute(
+        builder: (context) => CreateGroupScreen(),
       );
     default:
       return MaterialPageRoute(

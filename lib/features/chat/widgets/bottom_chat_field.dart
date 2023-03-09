@@ -17,9 +17,11 @@ import 'package:whats_up/features/chat/widgets/message_reply_preview.dart';
 
 class BottomChatField extends ConsumerStatefulWidget {
   final String recieverUserId;
+  final bool isGroupChat;
   const BottomChatField({
     Key? key,
     required this.recieverUserId,
+    required this.isGroupChat,
   }) : super(key: key);
 
   @override
@@ -57,6 +59,7 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
             context,
             _messageController.text.trim(),
             widget.recieverUserId,
+            widget.isGroupChat,
           );
       setState(() {
         _messageController.text = "";
@@ -92,6 +95,7 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
             context,
             gif.url,
             widget.recieverUserId,
+            widget.isGroupChat,
           );
     }
   }
@@ -138,6 +142,7 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
           file,
           widget.recieverUserId,
           messageEnum,
+          widget.isGroupChat,
         );
   }
 
@@ -164,12 +169,12 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
   @override
   Widget build(BuildContext context) {
     final messageReply = ref.watch(messageReplyProvider);
-    //here i'm checking if the message is null, so if it's null 
+    //here i'm checking if the message is null, so if it's null
     //isShownMessage reply should be false
-     final isShownMessageReply = messageReply != null;
+    final isShownMessageReply = messageReply != null;
     return Column(
       children: [
-        isShownMessageReply ? const MessageReplyPreview() : const  SizedBox(),
+        isShownMessageReply ? const MessageReplyPreview() : const SizedBox(),
         Row(
           children: [
             Expanded(
