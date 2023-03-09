@@ -1,51 +1,46 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
- 
 class Status {
   final String uid;
-  final String userName;
+  final String username;
   final String phoneNumber;
+  final List<String> photoUrl;
+  final DateTime createdAt;
   final String profilePic;
   final String statusId;
-  final List<String> photoUrl;
   final List<String> whoCanSee;
-  final DateTime createAt;
-
   Status({
     required this.uid,
-    required this.userName,
+    required this.username,
     required this.phoneNumber,
-   required this.profilePic,
-   required  this.statusId,
-   required  this.photoUrl,
-   required this.whoCanSee,
-  required  this.createAt,
+    required this.photoUrl,
+    required this.createdAt,
+    required this.profilePic,
+    required this.statusId,
+    required this.whoCanSee,
   });
 
   Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'uidl': uid,
-      'userName': userName,
+    return {
+      'uid': uid,
+      'username': username,
       'phoneNumber': phoneNumber,
+      'photoUrl': photoUrl,
+      'createdAt': createdAt.millisecondsSinceEpoch,
       'profilePic': profilePic,
       'statusId': statusId,
-      'photoUrl': photoUrl,
       'whoCanSee': whoCanSee,
-      'createAt': createAt.millisecondsSinceEpoch,
     };
   }
 
   factory Status.fromMap(Map<String, dynamic> map) {
     return Status(
-      uid: map['uid'] as String,
-      userName: map['userName'] as String,
-      phoneNumber: map['phoneNumber'] as String,
-      profilePic: map['profilePic'] as String,
-      statusId: map['statusId'] as String,
-      photoUrl: List<String>.from(map['photoUrl'] as List<String>),
-      whoCanSee: List<String>.from(map['whoCanSee'] as List<String>),
-      createAt: DateTime.fromMillisecondsSinceEpoch(map['createAt'] as int),
+      uid: map['uid'] ?? '',
+      username: map['username'] ?? '',
+      phoneNumber: map['phoneNumber'] ?? '',
+      photoUrl: List<String>.from(map['photoUrl']),
+      createdAt: DateTime.fromMillisecondsSinceEpoch(map['createdAt']),
+      profilePic: map['profilePic'] ?? '',
+      statusId: map['statusId'] ?? '',
+      whoCanSee: List<String>.from(map['whoCanSee']),
     );
   }
-
-  
 }

@@ -2,9 +2,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whats_up/features/auth/controller/auth_controller.dart';
-import 'package:whats_up/features/status/repoistories/status_repository.dart';
+import 'package:whats_up/features/status/repository/status_repository.dart';
 import 'package:whats_up/models/status.dart';
  
+
 final statusControllerProvider = Provider((ref) {
   final statusRepository = ref.read(statusRepositoryProvider);
   return StatusController(

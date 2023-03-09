@@ -5,7 +5,6 @@ import 'package:whats_up/common/widgets/loader.dart';
 import 'package:whats_up/features/status/controller/status_controller.dart';
 import 'package:whats_up/features/status/screens/status_screen.dart';
 import 'package:whats_up/models/status.dart';
-  
 
 class StatusContactsScreen extends ConsumerWidget {
   const StatusContactsScreen({Key? key}) : super(key: key);
@@ -36,7 +35,7 @@ class StatusContactsScreen extends ConsumerWidget {
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: ListTile(
                       title: Text(
-                        statusData.userName,
+                        statusData.username,
                       ),
                       leading: CircleAvatar(
                         backgroundImage: NetworkImage(
@@ -47,7 +46,10 @@ class StatusContactsScreen extends ConsumerWidget {
                     ),
                   ),
                 ),
-                const Divider(color: dividerColor, indent: 85),
+                const Divider(
+                  color: dividerColor,
+                  indent: 85,
+                ),
               ],
             );
           },

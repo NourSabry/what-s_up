@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -12,6 +11,7 @@ import 'package:whats_up/common/repository/common_firebase_repo.dart';
 import 'package:whats_up/common/utils/utils.dart';
 import 'package:whats_up/models/status.dart';
 import 'package:whats_up/models/user_model.dart';
+ 
 
 final statusRepositoryProvider = Provider(
   (ref) => StatusRepository(
@@ -41,11 +41,12 @@ class StatusRepository {
     try {
       var statusId = const Uuid().v1();
       String uid = auth.currentUser!.uid;
-      String imageurl =
-          await ref.read(commonFirebaseStorageRepoProvider).storeToFilestore(
-                '/status/$statusId$uid',
-                statusImage,
-              );
+      String imageurl = await ref
+          .read(commonFirebaseStorageRepoProvider)
+          .storeToFilestore(
+            '/status/$statusId$uid',
+            statusImage,
+          );
       List<Contact> contacts = [];
       if (await FlutterContacts.requestPermission()) {
         contacts = await FlutterContacts.getContacts(withProperties: true);
@@ -97,10 +98,10 @@ class StatusRepository {
 
       Status status = Status(
         uid: uid,
-        userName: username,
+        username: username,
         phoneNumber: phoneNumber,
         photoUrl: statusImageUrls,
-        createAt: DateTime.now(),
+        createdAt: DateTime.now(),
         profilePic: profilePic,
         statusId: statusId,
         whoCanSee: uidWhoCanSee,
@@ -122,8 +123,6 @@ class StatusRepository {
       for (int i = 0; i < contacts.length; i++) {
         var statusesSnapshot = await firestore
             .collection('status')
-            //             //since we're using two where conditions, indexs will be required in firebase
-
             .where(
               'phoneNumber',
               isEqualTo: contacts[i].phones[0].number.replaceAll(

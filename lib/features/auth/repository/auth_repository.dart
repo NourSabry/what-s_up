@@ -75,9 +75,9 @@ class AuthRepository {
         smsCode: userOTP,
       );
       await auth.signInWithCredential(credential);
-       Navigator.pushNamedAndRemoveUntil(
+      Navigator.pushNamedAndRemoveUntil(
         context,
-        UserInfoInformationScreen .routeName,
+        UserInfoInformationScreen.routeName,
         (route) => false,
       );
     } on FirebaseAuthException catch (e) {
@@ -141,7 +141,4 @@ class AuthRepository {
       'isOnline': isOnline,
     });
   }
-
-
-   
 }

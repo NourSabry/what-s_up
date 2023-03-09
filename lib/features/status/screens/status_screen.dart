@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:story_view/story_view.dart';
 import 'package:whats_up/common/widgets/loader.dart';
 import 'package:whats_up/models/status.dart';
+ 
 
 class StatusScreen extends StatefulWidget {
   static const String routeName = '/status-screen';
