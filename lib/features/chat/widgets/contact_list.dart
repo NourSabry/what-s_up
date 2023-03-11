@@ -43,6 +43,7 @@ StreamBuilder<List<Group>>(
                                         'name': groupData.name,
                                         'uid': groupData.groupId,
                                         'isGroupChat': true,
+                                        'profilePic' : groupData.groupPic,
                                       },
                                     );
                                   },
@@ -110,6 +111,7 @@ StreamBuilder<List<Group>>(
                                         'name': chatContactData.name,
                                         'uid': chatContactData.contactId,
                                         'isGroupChat': false,
+                                        'profilePic' : chatContactData.profilePic,
                                       },
                                     );
                                   },
